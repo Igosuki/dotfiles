@@ -1,0 +1,48 @@
+[user]
+	name = Some Lazy Programmer
+	email = something@gmail.com
+[core]
+	excludesfile = /Users/geps/.gitignore_global
+	autocrlf = input
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+autocrlf = false
+[alias]
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	co = checkout
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+	fl = log -u
+	f = "!git ls-files | grep -i"
+	grep = grep -Ii
+	lalias = "!git config -l | grep alias | cut -c 7-"
+	done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	lasttag = describe --tags --abbrev=0
+	lt = describe --tags --abbrev=0
+	dr  = "!f() { git diff "$1"^.."$1"; }; f"
+	lc  = "!f() { git ll "$1"^.."$1"; }; f"
+	diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+	lb = " !f() { git branch -a | more; }; f"
+	cp = cherry-pick
+	st = status -s
+	cl = clone
+	ci = commit
+	br = branch
+	diff = diff --work-diff
+	dc = diff --cached
+	r = reset
+	r1 = reset HEAD^
+	r2 = reset HEAD^^
+	rh = reset --hard
+	rh1 = reset --hard HEAD^
+	rh2 = reset --hard HEAD^^
+	sl = stash list
+	sa = stash apply
+	ss = stash save
+	logtree = log --graph --oneline --decorate --all
