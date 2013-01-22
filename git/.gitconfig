@@ -46,4 +46,5 @@ autocrlf = false
 	sa = stash apply
 	ss = stash save
 	logtree = log --graph --oneline --decorate --all
-	horriblyremovefiles = git filter-branch --index-filter 'git rm --cached --ignore-unmatch file_to_remove' --prune-empty -- --all
+	lmine = "!f() { git log --branches --author=igosuki@gmail.com; }; f"
+	horriblyremovefiles = git filter-branch --index-filter 'git rm --cached --ignore-unmatch $1' --prune-empty -- --all 
