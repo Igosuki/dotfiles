@@ -47,4 +47,5 @@ autocrlf = false
 	ss = stash save
 	logtree = log --graph --oneline --decorate --all
 	lmine = "!f() { git log --branches --author=igosuki@gmail.com; }; f"
-	horriblyremovefiles = git filter-branch --index-filter 'git rm --cached --ignore-unmatch $1' --prune-empty -- --all 
+	purgeforever = "!f() { git filter-branch --prune-empty -d /dev/shm/scratch --index-filter "git rm --cached -f --ignore-unmatch $1" --tag-name-filter cat -- --all }"
+	updaterefsafterpurge = "f() { git update-ref -d refs/original/refs/heads/master; git reflog expire --expire=now --all; git gc --prune=now }"
