@@ -1,0 +1,1 @@
+- "Strong minds discuss ideas, average minds discuss events, weak minds discuss people.” ― Socrates
