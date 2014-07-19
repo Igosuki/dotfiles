@@ -1,1 +1,2 @@
 - "Strong minds discuss ideas, average minds discuss events, weak minds discuss people.” ― Socrates
+- "Lorsque tu fais quelque chose, sache que tu as contre toi ceux qui veulent faire la même chose, ceux qui veulent faire le contraire et l’immense majorité de ceux qui ne veulent rien faire." - Confucius
