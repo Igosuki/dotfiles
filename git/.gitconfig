@@ -1,33 +1,42 @@
-[user]
-	name = Guillaume Balaine
-	email = igosuki@gmail.com
 [core]
 	excludesfile = /Users/geps/.gitignore_global
 	autocrlf = input
+	pager = delta
+	editor = vim
+[interactive]
+        diffFilter = delta --color-only
+[add.interactive]
+        useBuiltin = false
+[delta]
+        navigate = true
+[merge]
+        conflictstyle = diff3
+[diff]
+        colorMoved = default
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-autocrlf = false
+	autocrlf = false
 [alias]
-	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	ls = log --pretty=format:%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn] --decorate
 	co = checkout
-	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
-	lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
-	ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+	ll = log --pretty=format:%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn] --decorate --numstat
+	lds = log --pretty=format:%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn] --decorate --date=short
+	ld = log --pretty=format:%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn] --decorate --date=relative
 	fl = log -u
-	f = "!git ls-files | grep -i"
+	f = !git ls-files | grep -i
 	grep = grep -Ii
-	lalias = "!git config -l | grep alias | cut -c 7-"
-	done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
-	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	lalias = !git config -l | grep alias | cut -c 7-
+	done = "!f() { git branch | grep $1 | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+	assumed = !git ls-files -v | grep ^h | cut -c 3-
 	lasttag = describe --tags --abbrev=0
 	lt = describe --tags --abbrev=0
-	dr  = "!f() { git diff "$1"^.."$1"; }; f"
-	lc  = "!f() { git ll "$1"^.."$1"; }; f"
-	diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+	dr = "!f() { git diff $1^..$1; }; f"
+	lc = "!f() { git ll $1^..$1; }; f"
+	diffr = "!f() { git diff $1^..$1; }; f"
 	lb = " !f() { git branch -a | more; }; f"
 	cp = cherry-pick
 	st = status -s
@@ -47,17 +56,36 @@ autocrlf = false
 	ss = stash save
 	logtree = log --graph --oneline --decorate --all
 	lmine = "!f() { git log --branches --author=igosuki@gmail.com; }; f"
-	purgeforever = "!f() { git filter-branch --prune-empty -d /dev/shm/scratch --index-filter "git rm --cached -f --ignore-unmatch $1" --tag-name-filter cat -- --all }"
+	purgeforever = !f() { git filter-branch --prune-empty -d /dev/shm/scratch --index-filter git rm --cached -f --ignore-unmatch $1 --tag-name-filter cat -- --all }
 	updaterefsafterpurge = "f() { git update-ref -d refs/original/refs/heads/master; git reflog expire --expire=now --all; git gc --prune=now }"
 	ec = config --global -e
 	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
 	cob = checkout -b
 	cm = !git commit -m
 	save = !git add -A && git commit -m 'SAVEPOINT'
-	wip = !git add -u && git commit -m "WIP" 
+	wip = !git add -u && git commit -m WIP
 	undo = reset HEAD~1 --mixed
 	amend = commit -a --amend
 	wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
-	bclean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs -r git branch -d; }; f"
+	bclean = "!f() { git branch --merged ${1-master} | grep -v  ${1-master}$ | xargs -r git branch -d; }; f"
 	bdone = "!f() { git checkout ${1-master} && git up && git bclean ${1-master}; }; f"
         pr = pull --rebase
+	lrecent = !git for-each-ref --sort=-committerdate refs/heads/ --format=\"%(refname:short) - %(committerdate:relative)\"
+[filesystem "Oracle Corporation|11.0.6|/dev/disk1s1"]
+	timestampResolution = 6000 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[delta]
+	side-by-side = true
+[filesystem "Azul Systems, Inc.|15-ea|/dev/disk1s1"]
+	timestampResolution = 7000 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[pull]
+	rebase = true
+[credential]
+	helper = cache
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
